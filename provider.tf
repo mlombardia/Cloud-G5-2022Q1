@@ -1,9 +1,9 @@
 provider "aws" {
-    alias  = "aws"
-    region = "us-east-1"
-    
-    shared_credentials_file = "~/.aws/credentials"
-    profile                 = "default"
+  alias  = "aws"
+  region = "us-east-1"
+
+  shared_credentials_file = "~/.aws/credentials"
+  profile                 = "default"
 }
 
 # Another way to login not quite recommended is by access keys and secret access keys.

@@ -1,9 +1,14 @@
 
-resource "aws_instance" "app_server" {
-  ami           = "ami-830c94e3"
-  instance_type = "t2.micro"
+resource "aws_s3_bucket" "b" {
+  bucket = "itba-tp-podcasts-bucket"
 
   tags = {
-    Name = "ExampleAppServerInstance"
+    Name        = "My bucket"
+    Environment = "Dev"
   }
+}
+
+resource "aws_s3_bucket_acl" "example" {
+  bucket = aws_s3_bucket.b.id
+  acl    = "private"
 }
