@@ -10,3 +10,5 @@ terraform.tfstate.backup
 .DS_Store
 
 resources/mylayer/
+
+*.info
