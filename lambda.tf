@@ -21,9 +21,17 @@ resource "aws_lambda_permission" "apigw_lambda" {
 resource "aws_lambda_function" "this" {
   provider = aws.aws
 
-  filename      = "${local.path}/lambda/uploadMP32.zip"
+  filename      = "${local.path}/lambda/upload.zip"
   function_name = "AWSLambdaHandler-${replace(local.bucket_name, "-", "")}"
   role          = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
   handler       = "uploadMP3.main"
   runtime       = "python3.9"
+}
+
+
+resource "aws_lambda_layer_version" "lambda_layer" {
+  filename   = "${local.path}/pandas.zip"
+  layer_name = "lambda_layer_name"
+
+  compatible_runtimes = ["python3.9"]
 }
