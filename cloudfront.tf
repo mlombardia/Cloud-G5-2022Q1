@@ -1,21 +1,4 @@
 # ---------------------------------------------------------------------------
-# S3 bucket for CloudFront distribution
-# ---------------------------------------------------------------------------
-
-resource "aws_s3_bucket" "cloudfront_bucket" {      #TODO mover esto a un s3.tf para todos los buckets
-  bucket = "${local.cloudfront_bucket_name}"
-
-  tags = {
-    Name = "Cloudfront bucket"
-  }
-}
-
-resource "aws_s3_bucket_acl" "b_acl" {
-  bucket = aws_s3_bucket.cloudfront_bucket.id
-  acl    = "private"
-}
-
-# ---------------------------------------------------------------------------
 # CloudFront distribution
 # ---------------------------------------------------------------------------
 resource "aws_cloudfront_distribution" "this" {
