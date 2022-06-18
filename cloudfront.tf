@@ -1,11 +1,14 @@
 # ---------------------------------------------------------------------------
 # CloudFront distribution
 # ---------------------------------------------------------------------------
-resource "aws_cloudfront_distribution" "this" {
+resource "aws_cloudfront_distribution" "cf_distro" {
+ 
+ # ---------- aca cuando tengamos la layer de presentacion le sumamos un origin extra -----------------
+  
   origin {
     domain_name = replace(aws_api_gateway_deployment.this.invoke_url, "/^https?://([^/]*).*/", "$1")
     origin_id   = "apigw"
-    origin_path = "/podcast"
+    origin_path = "/production"
   }
 
   enabled             = true
@@ -13,18 +16,10 @@ resource "aws_cloudfront_distribution" "this" {
   comment             = "Cloudfront"
   default_root_object = "index.html"
 
-  logging_config {
-    include_cookies = false
-    bucket          = "cflogs.s3.amazonaws.com"
-    prefix          = "cloudfront"
-  }
-
   aliases = ["podcastupload.com"]
 
-  # Cache behavior with precedence 0
-  ordered_cache_behavior {
-    path_pattern     = "/api/*"
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+  default_cache_behavior {
+    allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "apigw"
 
@@ -39,8 +34,7 @@ resource "aws_cloudfront_distribution" "this" {
     min_ttl                = 0
     default_ttl            = 0
     max_ttl                = 0
-    compress               = true
-    viewer_protocol_policy = "redirect-to-https"
+    viewer_protocol_policy = "allow-all"
   }
 
   price_class = "PriceClass_200"
