@@ -42,4 +42,15 @@ resource "aws_cloudfront_distribution" "cf_distro" {
   tags = {
     Environment = "production"
   }
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "whitelist"
+      locations        = ["US", "CA", "GB", "DE"]
+    }
+  }
+
+  viewer_certificate {
+    cloudfront_default_certificate = true
+  }
 }
