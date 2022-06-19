@@ -1,3 +1,10 @@
+resource "aws_s3_bucket" "cloudfront_bucket" {      #TODO mover esto a un s3.tf para todos los buckets
+  bucket = "${local.cloudfront_bucket_name}"
+
+  tags = {
+    Name = "Cloudfront bucket"
+  }
+}
 
 resource "aws_s3_bucket" "podcast_bucket" {
   bucket = "${local.bucket_name}"
