@@ -21,7 +21,7 @@ resource "aws_lambda_permission" "apigw_lambda" {
 resource "aws_lambda_function" "this" {
   provider = aws.aws
 
-  filename      = "${local.path}/lambda/upload.zip"
+  filename      = "${local.path}/lambda/uploadMP3.zip"
   function_name = "AWSLambdaHandler-${replace(local.bucket_name, "-", "")}"
   role          = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
   handler       = "uploadMP3.main"
@@ -29,9 +29,9 @@ resource "aws_lambda_function" "this" {
 }
 
 
-resource "aws_lambda_layer_version" "lambda_layer" {
-  filename   = "${local.path}/pandas.zip"
-  layer_name = "lambda_layer_name"
+# resource "aws_lambda_layer_version" "lambda_layer_1" {
+#   arn="arn:aws:lambda:us-east-1:336392948345:layer:AWSDataWrangler-Python39:1"
+#   layer_name = "lambda_layer_1"
 
-  compatible_runtimes = ["python3.9"]
-}
+#   compatible_runtimes = ["python3.9"]
+# }

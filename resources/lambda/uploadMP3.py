@@ -1,22 +1,29 @@
 import boto3
 import json
-import pandas as pd
 
 def main(event, context):
+    #Upload file into s3
+    bucket_name = 'itba-tp-podcasts-bucket2'
+    s3 = boto3.client('s3')
+    uploadByteStream = bytes(json.dumps(event).encode('UTF-8'))
+    s3.put_object(Body=uploadByteStream,
+     Bucket=bucket_name,
+     Key= event['title'])
+    
+    #Upload row into dynamoDB
+    dynamodb = boto3.client('dynamodb')
+    url = f"https://s3.us-east-1.amazonaws.com/{bucket_name}/{event['title']}"
+    dynamodb.put_item(TableName='Podcasts', Item={'Title': {'S': event['title'] },'Url': {'S' : url}})
 
-    s3 = boto3.resource('s3')
-    df = pd.read_json(url)
-    data = df.to_json()
-    fileName = 'data' + '.json '
-    uploadByteStream = bytes(json.dumps(data.encode('UTF-8')))
-    s3.meta.client.upload_file(uploadByteStream, 'itba-tp-podcasts-bucket2', 'comentaristas.mp3')
+    body = f"Se ha ingresado el archivo {event['title']} correctamente"
     resp = {
 		"statusCode": 200,
 		"headers": {
 			"Access-Control-Allow-Origin": "*",
 		},
-		"body": "El lab ha sido finalizado correctamente",
-	}
+		"body": body
+	  }
+	
 	
 
     return resp

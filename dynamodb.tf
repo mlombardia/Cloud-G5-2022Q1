@@ -9,7 +9,7 @@ resource "aws_dynamodb_table" "podcasts-table" {
   }
 
   ttl {
-    attribute_name = "TimeToExist"
+    attribute_name = ""
     enabled        = false
   }
 
@@ -37,7 +37,7 @@ resource "aws_dynamodb_table" "subscriptions-table" {
   }
 
   ttl {
-    attribute_name = "TimeToExist"
+    attribute_name = ""
     enabled        = false
   }
 
