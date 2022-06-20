@@ -6,14 +6,15 @@ resource "aws_cloudfront_distribution" "cf_distro" {
  # ---------- aca cuando tengamos la layer de presentacion le sumamos un origin extra -----------------
   origin {
     
-    domain_name = aws_s3_bucket.podcast_bucket.bucket_regional_domain_name
-    origin_id   = local.s3_origin_id
-  }
+    domain_name = "${aws_s3_bucket.cloudfront_bucket.bucket_regional_domain_name}"
+    origin_id   = "${local.s3_origin_id}"
 
-  origin {
-    domain_name = replace(aws_api_gateway_deployment.this.invoke_url, "/^https?://([^/]*).*/", "$1")
-    origin_id   = "apigw"
-    origin_path = "/production"
+    custom_origin_config {
+      http_port              = "80"
+      https_port             = "443"
+      origin_protocol_policy = "http-only"
+      origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+    }
   }
 
   enabled             = true
@@ -21,12 +22,10 @@ resource "aws_cloudfront_distribution" "cf_distro" {
   comment             = "Cloudfront"
   default_root_object = "index.html"
 
-  aliases = ["podcastupload.com"]
-
   default_cache_behavior {
     allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "apigw"
+    target_origin_id = "${local.s3_origin_id}"
 
     forwarded_values {
       query_string = true
