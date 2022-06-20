@@ -17,6 +17,19 @@ resource "aws_cloudfront_distribution" "cf_distro" {
     }
   }
 
+  origin {
+    domain_name = replace(aws_api_gateway_deployment.this.invoke_url, "/^https?://([^/]*).*/", "$1")
+    origin_id   = "apigw"
+    origin_path = "/production"
+
+    custom_origin_config {
+      http_port              = "80"
+      https_port             = "443"
+      origin_protocol_policy = "http-only"
+      origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+    }
+  }
+
   enabled             = true
   is_ipv6_enabled     = true
   comment             = "Cloudfront"

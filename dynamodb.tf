@@ -1,5 +1,5 @@
 resource "aws_dynamodb_table" "podcasts-table" {
-  name           = "Podcasts"
+  name           = "${data.aws_caller_identity.current.account_id}-Podcasts"
   billing_mode   = "PAY_PER_REQUEST"
   hash_key       = "Title"
 
@@ -21,7 +21,7 @@ resource "aws_dynamodb_table" "podcasts-table" {
 }
 
 resource "aws_dynamodb_table" "subscriptions-table" {
-  name           = "Subscriptions"
+  name           = "${data.aws_caller_identity.current.account_id}-Subscriptions"
   billing_mode   = "PAY_PER_REQUEST"
   hash_key       = "email"
   range_key = "UserId"
