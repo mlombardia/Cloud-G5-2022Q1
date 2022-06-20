@@ -21,11 +21,20 @@ resource "aws_lambda_permission" "apigw_lambda" {
 resource "aws_lambda_function" "this" {
   provider = aws.aws
 
-  filename      = "${local.path}/lambda/uploadMP3.zip"
+  filename      = "${local.path}/lambda/upload.zip"
   function_name = "AWSLambdaHandler-${replace(local.bucket_name, "-", "")}"
   role          = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
   handler       = "uploadMP3.main"
   runtime       = "python3.9"
+  lifecycle {
+    create_before_destroy = true
+  }
+
+    environment {
+    variables = {
+      bucket_name = "${local.bucket_name}"
+    }
+  }
 }
 
 

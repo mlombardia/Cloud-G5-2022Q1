@@ -1,9 +1,11 @@
 import boto3
 import json
+import os
 
 def main(event, context):
+    client = boto3.client('ssm')
+    bucket_name = os.environ.get('bucket_name')
     #Upload file into s3
-    bucket_name = 'itba-tp-podcasts-bucket2'
     s3 = boto3.client('s3')
     uploadByteStream = bytes(json.dumps(event).encode('UTF-8'))
     s3.put_object(Body=uploadByteStream,
