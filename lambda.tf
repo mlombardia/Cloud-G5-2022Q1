@@ -1,46 +1,25 @@
+module "lambda" {
 
-# ---------------------------------------------------------------------------
-# AWS Lambda resources
-# ---------------------------------------------------------------------------
+  source = "./modules/lambda"
 
-# Lambda
-
-
-
-resource "aws_lambda_permission" "apigw_lambda" {
-  provider = aws.aws
-
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.this.function_name
-  principal     = "apigateway.amazonaws.com"
-
-  source_arn = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.this.id}/*/${aws_api_gateway_method.this.http_method}${aws_api_gateway_resource.this.path}"
-}
-
-resource "aws_lambda_function" "this" {
-  provider = aws.aws
-
-  filename      = "${local.path}/lambda/upload.zip"
-  function_name = "AWSLambdaHandler-${replace(local.bucket_name, "-", "")}"
-  role          = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
-  handler       = "uploadMP3.main"
-  runtime       = "python3.9"
-  lifecycle {
-    create_before_destroy = true
+  providers = {
+    aws = aws.aws
   }
+  
+  bucket_name = module.s3.bucket_name
 
-    environment {
-    variables = {
-      bucket_name = "${local.bucket_name}"
-    }
-  }
+  region = data.aws_region.current.name
+
+  account_id = data.aws_caller_identity.current.account_id
+
+  rest_api = module.api_gateway.rest_api
+
+  http_method = module.api_gateway.http_method
+
+  api_path = module.api_gateway.api_path
+
+  depends_on = [
+    module.s3,
+    module.api_gateway
+  ]
 }
-
-
-# resource "aws_lambda_layer_version" "lambda_layer_1" {
-#   arn="arn:aws:lambda:us-east-1:336392948345:layer:AWSDataWrangler-Python39:1"
-#   layer_name = "lambda_layer_1"
-
-#   compatible_runtimes = ["python3.9"]
-# }
