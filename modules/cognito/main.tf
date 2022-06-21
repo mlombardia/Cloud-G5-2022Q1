@@ -8,13 +8,9 @@ resource "aws_cognito_user" "user1" {
 }
 
 
-resource "aws_cognito_user_group" "main" {
-  name         = "user-group"
-  user_pool_id = aws_cognito_user_pool.pool.id
-}
-
-resource "aws_cognito_user_group" "user2" {
-  name         = "user2-group"
+resource "aws_cognito_user_group" "user_group" {
+  count = 2
+name         = "user${count.index}-group"
   user_pool_id = aws_cognito_user_pool.pool.id
 }
 
