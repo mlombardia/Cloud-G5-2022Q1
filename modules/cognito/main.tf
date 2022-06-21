@@ -9,8 +9,8 @@ resource "aws_cognito_user" "user1" {
 
 
 resource "aws_cognito_user_group" "user_group" {
-  count = 2
-name         = "user${count.index}-group"
+  count        = 2
+  name         = "user${count.index}-group"
   user_pool_id = aws_cognito_user_pool.pool.id
 }
 
