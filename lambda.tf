@@ -1,37 +1,25 @@
+module "lambda" {
 
-# ---------------------------------------------------------------------------
-# AWS Lambda resources
-# ---------------------------------------------------------------------------
+  source = "./modules/lambda"
 
-# Lambda
+  providers = {
+    aws = aws.aws
+  }
 
+  bucket_name = module.s3.bucket_name
 
+  region = data.aws_region.current.name
 
-resource "aws_lambda_permission" "apigw_lambda" {
-  provider = aws.aws
+  account_id = data.aws_caller_identity.current.account_id
 
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.this.function_name
-  principal     = "apigateway.amazonaws.com"
+  rest_api = module.api_gateway.rest_api
 
-  source_arn = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.this.id}/*/${aws_api_gateway_method.this.http_method}${aws_api_gateway_resource.this.path}"
-}
+  http_method = module.api_gateway.http_method
 
-resource "aws_lambda_function" "this" {
-  provider = aws.aws
+  api_path = module.api_gateway.api_path
 
-  filename      = "${local.path}/lambda/upload.zip"
-  function_name = "AWSLambdaHandler-${replace(local.bucket_name, "-", "")}"
-  role          = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
-  handler       = "uploadMP3.main"
-  runtime       = "python3.9"
-}
+  podcast_table = module.dynamodb.podcast_table
 
 
-resource "aws_lambda_layer_version" "lambda_layer" {
-  filename   = "${local.path}/pandas.zip"
-  layer_name = "lambda_layer_name"
 
-  compatible_runtimes = ["python3.9"]
 }
