@@ -5,7 +5,7 @@ module "lambda" {
   providers = {
     aws = aws.aws
   }
-  
+
   bucket_name = module.s3.bucket_name
 
   region = data.aws_region.current.name
@@ -18,8 +18,8 @@ module "lambda" {
 
   api_path = module.api_gateway.api_path
 
-  depends_on = [
-    module.s3,
-    module.api_gateway
-  ]
+  podcast_table = module.dynamodb.podcast_table
+
+
+
 }

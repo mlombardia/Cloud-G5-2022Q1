@@ -7,7 +7,4 @@ module "api_gateway" {
     aws = aws.aws
   }
 
-  depends_on = [
-    module.lambda
-  ]
 }

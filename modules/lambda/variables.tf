@@ -27,3 +27,9 @@ variable "api_path" {
   description = "api path"
   type        = string
 }
+
+
+variable "podcast_table" {
+  description = "podcasts table name"
+  type        = string
+}

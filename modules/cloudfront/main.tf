@@ -2,12 +2,15 @@
 # CloudFront distribution
 # ---------------------------------------------------------------------------
 resource "aws_cloudfront_distribution" "cf_distro" {
- 
- # ---------- aca cuando tengamos la layer de presentacion le sumamos un origin extra -----------------
+
+  wait_for_deployment = false
+
+
+  # ---------- aca cuando tengamos la layer de presentacion le sumamos un origin extra -----------------
   origin {
-    
+
     domain_name = var.domain_name
-    origin_id   = "${local.s3_origin_id}"
+    origin_id   = local.s3_origin_id
 
     custom_origin_config {
       http_port              = "80"
@@ -19,7 +22,7 @@ resource "aws_cloudfront_distribution" "cf_distro" {
 
   origin {
     domain_name = var.api_domain_name
-    origin_id   = "${local.apigw_origin_id}"
+    origin_id   = local.apigw_origin_id
     origin_path = "/production"
 
     custom_origin_config {
@@ -36,9 +39,9 @@ resource "aws_cloudfront_distribution" "cf_distro" {
   default_root_object = "index.html"
 
   default_cache_behavior {
-    allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${local.s3_origin_id}"
+    target_origin_id = local.s3_origin_id
 
     forwarded_values {
       query_string = true

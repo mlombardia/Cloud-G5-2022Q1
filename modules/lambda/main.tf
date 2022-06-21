@@ -19,18 +19,21 @@ resource "aws_lambda_permission" "apigw_lambda" {
 
 resource "aws_lambda_function" "this" {
 
-  filename      = "${local.path}/lambda/upload.zip"
-  function_name = "AWSLambdaHandler-${replace(var.bucket_name, "-", "")}"
-  role          = "arn:aws:iam::${var.account_id}:role/LabRole"
-  handler       = "uploadMP3.main"
-  runtime       = "python3.9"
+  filename         = local.lambda_file_name
+  function_name    = "AWSLambdaHandler-${replace(var.bucket_name, "-", "")}"
+  role             = "arn:aws:iam::${var.account_id}:role/LabRole"
+  handler          = "uploadMP3.main"
+  runtime          = "python3.9"
+  source_code_hash = filebase64sha256("${local.lambda_file_name}")
+
   lifecycle {
     create_before_destroy = true
   }
 
-    environment {
+  environment {
     variables = {
-      bucket_name = "${var.bucket_name}"
+      bucket_name       = "${var.bucket_name}"
+      dynamo_table_name = "${var.podcast_table}"
     }
   }
 }

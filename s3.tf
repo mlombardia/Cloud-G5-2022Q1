@@ -6,7 +6,7 @@ module "s3" {
     aws = aws.aws
   }
 
-  bucket_name = "${data.aws_caller_identity.current.account_id}-itba-tp-podcasts-bucket2"
-  cloudfront_bucket_name = "${data.aws_caller_identity.current.account_id}-itba-tp-podcasts-cloudfront-bucket"
-  
+  bucket_name            = join("-", [data.aws_caller_identity.current.account_id, "itba-tp-podcasts-bucket2"])
+  cloudfront_bucket_name = join("-", [data.aws_caller_identity.current.account_id, "itba-tp-podcasts-cloudfront-bucket"])
+
 }

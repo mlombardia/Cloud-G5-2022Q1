@@ -5,6 +5,6 @@ module "dynamodb" {
     aws = aws.aws
   }
 
-  prefix = "${data.aws_caller_identity.current.account_id}"
+  prefix = data.aws_caller_identity.current.account_id
 
 }

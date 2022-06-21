@@ -12,3 +12,5 @@ terraform.tfstate.backup
 resources/mylayer/
 
 *.info
+
+*.code-workspace

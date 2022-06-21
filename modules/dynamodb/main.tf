@@ -1,7 +1,7 @@
 resource "aws_dynamodb_table" "podcasts-table" {
-  name           = "${var.prefix}-Podcasts"
-  billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "Title"
+  name         = "${var.prefix}-Podcasts"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "Title"
 
   attribute {
     name = "Title"
@@ -21,10 +21,10 @@ resource "aws_dynamodb_table" "podcasts-table" {
 }
 
 resource "aws_dynamodb_table" "subscriptions-table" {
-  name           = "${var.prefix}-Subscriptions"
-  billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "email"
-  range_key = "UserId"
+  name         = "${var.prefix}-Subscriptions"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "email"
+  range_key    = "UserId"
 
   attribute {
     name = "email"
