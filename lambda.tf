@@ -20,6 +20,6 @@ module "lambda" {
 
   podcast_table = module.dynamodb.podcast_table
 
-
+  lambda_file_name = "./resources/lambda/uploadMP3.zip"
 
 }

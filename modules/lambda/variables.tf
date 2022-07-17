@@ -33,3 +33,8 @@ variable "podcast_table" {
   description = "podcasts table name"
   type        = string
 }
+
+variable "lambda_file_name" {
+  description = "File name for Lambda"
+  type        = string
+}

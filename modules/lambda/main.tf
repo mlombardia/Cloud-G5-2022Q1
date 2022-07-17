@@ -19,12 +19,12 @@ resource "aws_lambda_permission" "apigw_lambda" {
 
 resource "aws_lambda_function" "this" {
 
-  filename         = local.lambda_file_name
+  filename         = var.lambda_file_name
   function_name    = "AWSLambdaHandler-${replace(var.bucket_name, "-", "")}"
   role             = "arn:aws:iam::${var.account_id}:role/LabRole"
   handler          = "uploadMP3.main"
   runtime          = "python3.9"
-  source_code_hash = filebase64sha256("${local.lambda_file_name}")
+  source_code_hash = filebase64sha256("${var.lambda_file_name}")
 
   lifecycle {
     create_before_destroy = true
@@ -37,11 +37,3 @@ resource "aws_lambda_function" "this" {
     }
   }
 }
-
-
-# resource "aws_lambda_layer_version" "lambda_layer_1" {
-#   arn="arn:aws:lambda:us-east-1:336392948345:layer:AWSDataWrangler-Python39:1"
-#   layer_name = "lambda_layer_1"
-
-#   compatible_runtimes = ["python3.9"]
-# }

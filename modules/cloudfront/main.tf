@@ -10,7 +10,7 @@ resource "aws_cloudfront_distribution" "this" {
   origin {
 
     domain_name = var.domain_name
-    origin_id   = local.s3_origin_id
+    origin_id   = var.s3_origin_id
 
     custom_origin_config {
       http_port              = "80"
@@ -22,7 +22,7 @@ resource "aws_cloudfront_distribution" "this" {
 
   origin {
     domain_name = var.api_domain_name
-    origin_id   = local.apigw_origin_id
+    origin_id   = var.apigw_origin_id
     origin_path = "/production"
 
     custom_origin_config {
@@ -41,7 +41,7 @@ resource "aws_cloudfront_distribution" "this" {
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = local.s3_origin_id
+    target_origin_id = var.s3_origin_id
 
     forwarded_values {
       query_string = true

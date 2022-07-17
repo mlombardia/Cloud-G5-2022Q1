@@ -4,8 +4,8 @@
 
 resource "aws_api_gateway_rest_api" "this" {
 
-  name        = "PodcastAPIGateway"
-  description = "API Gateway for Podcasts"
+  name        = var.name
+  description = var.description
 }
 
 resource "aws_api_gateway_resource" "this" {

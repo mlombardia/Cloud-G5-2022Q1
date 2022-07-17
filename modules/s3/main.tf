@@ -43,12 +43,12 @@ resource "aws_s3_bucket_lifecycle_configuration" "podcast_bucket" {
     status = "Enabled"
 
     transition {
-      days          = local.bucket_ia_transition
+      days          = var.bucket_ia_transition
       storage_class = "STANDARD_IA"
     }
 
     transition {
-      days          = local.bucket_glacier_transition
+      days          = var.bucket_glacier_transition
       storage_class = "GLACIER"
     }
   }

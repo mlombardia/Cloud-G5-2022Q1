@@ -7,4 +7,8 @@ module "api_gateway" {
     aws = aws.aws
   }
 
+  name = "PodcastAPIGateway"
+  
+  description = "API Gateway for Podcasts"
+
 }
