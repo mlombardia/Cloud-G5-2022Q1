@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------
 # CloudFront distribution
 # ---------------------------------------------------------------------------
-resource "aws_cloudfront_distribution" "cf_distro" {
+resource "aws_cloudfront_distribution" "this" {
 
   wait_for_deployment = false
 
