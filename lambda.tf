@@ -22,4 +22,11 @@ module "lambda" {
 
   lambda_file_name = "./resources/lambda/uploadMP3.zip"
 
+  handler = "uploadMP3.main"
+
+  runtime = "python3.9"
+
+  role = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
+
+  function_name = "AWSLambdaHandler-${replace(module.s3.bucket_name, "-", "")}"
 }

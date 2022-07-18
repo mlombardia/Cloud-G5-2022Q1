@@ -38,3 +38,28 @@ variable "lambda_file_name" {
   description = "File name for Lambda"
   type        = string
 }
+
+variable "handler" {
+  description = "Handler for Lambda"
+  type        = string
+}
+
+variable "runtime" {
+  description = "Runtime for Lambda"
+  type        = string
+}
+
+variable "role" {
+  description = "Role for Lambda"
+  type        = string
+}
+
+variable "bucket_name" {
+  description = "Bucket name for Lambda"
+  type        = string
+}
+
+variable "function_name" {
+  description = "Bucket name for Lambda"
+  type        = string 
+}

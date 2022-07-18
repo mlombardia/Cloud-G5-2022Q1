@@ -20,10 +20,10 @@ resource "aws_lambda_permission" "apigw_lambda" {
 resource "aws_lambda_function" "this" {
 
   filename         = var.lambda_file_name
-  function_name    = "AWSLambdaHandler-${replace(var.bucket_name, "-", "")}"
-  role             = "arn:aws:iam::${var.account_id}:role/LabRole"
-  handler          = "uploadMP3.main"
-  runtime          = "python3.9"
+  function_name    = var.function_name
+  role             = var.role
+  handler          = var.handler
+  runtime          = var.runtime
   source_code_hash = filebase64sha256("${var.lambda_file_name}")
 
   lifecycle {
