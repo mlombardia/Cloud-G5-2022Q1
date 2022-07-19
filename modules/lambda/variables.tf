@@ -54,11 +54,6 @@ variable "role" {
   type        = string
 }
 
-variable "bucket_name" {
-  description = "Bucket name for Lambda"
-  type        = string
-}
-
 variable "function_name" {
   description = "Bucket name for Lambda"
   type        = string 
