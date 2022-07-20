@@ -4,6 +4,9 @@ locals {
 	pool_name 					= "pool"
 	identity_pool_name 	= "identity_pool"
 
+  bucket_name = "b123122344234-itba-cloud-computing"
+  path        = "/resources"
+
 	cognito_user_groups = {
 		podcasters = {
 			pool_name				= "podcasters-${local.pool_name}"
@@ -17,4 +20,25 @@ locals {
 			identity_pool_name = "listeners-${local.identity_pool_name}"
 		}
 	}
+
+  s3 = {
+
+    # 1 - Website
+    website = {
+      bucket_name = local.bucket_name
+      path        = "/resources"
+
+      objects = {
+        error = {
+          filename     = "html/error.html"
+          content_type = "text/html"
+        }
+      }
+    }
+
+    # 2 - WWW Website
+    www-website = {
+      bucket_name = "www.${local.bucket_name}"
+    }
+  }
 }

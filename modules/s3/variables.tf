@@ -17,3 +17,18 @@ variable "bucket_glacier_transition" {
   description = "Number of days for Glacier transition"
   type        = number
 }
+
+variable "front_bucket_name" {
+  description = "Front Bucket name"
+  type        = string
+}
+
+variable "www_bucket_name" {
+  description = "www Bucket name"
+  type        = string
+}
+
+variable "logs_bucket_name" {
+  description = "Logs Bucket name"
+  type        = string
+}
