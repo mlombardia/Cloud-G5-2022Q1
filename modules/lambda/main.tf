@@ -74,7 +74,7 @@ resource "aws_lambda_function" "get_podcast" {
   function_name    = var.function_get_podcast_name
   role             = var.role
   handler          = var.get_podcast_handler
-  runtime          = var.runtime
+  runtime          = var.get_podcast_runtime
   source_code_hash = filebase64sha256("${var.lambda_get_podcast_file_name}")
 
   lifecycle {
