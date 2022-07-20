@@ -78,3 +78,23 @@ variable "function_subscribe_name" {
   description = "Subscribe name for Lambda"
   type        = string 
 }
+
+variable "lambda_get_podcast_file_name" {
+  description = "Get Podcast Lambda File Name"
+  type        = string
+}
+  
+variable "get_podcast_handler" {
+  description = "Get Podcast Handler"
+  type        = string
+}
+    
+variable "get_podcast_runtime" { 
+  description = "Get Podcast Runtime"
+  type        = string
+}  
+
+variable "function_get_podcast_name" {
+  description = "Get Podcast Function Name"
+  type        = string
+}

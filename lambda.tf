@@ -26,15 +26,23 @@ module "lambda" {
 
   lambda_subscribe_name = "./resources/lambda/subscribeUser.zip"
 
+  lambda_get_podcast_file_name = "./resources/get-podcast-lambda/dist.zip"
+
   handler = "uploadMP3.main"
 
   subscribe_handler = "subscribeUser.main"
+  
+  get_podcast_handler = "index.handler"
 
   runtime = "python3.9"
+
+  get_podcast_runtime = "nodejs16.x"
 
   role = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
 
   function_name = "AWSLambdaHandler-${replace(module.s3.bucket_name, "-", "")}"
 
   function_subscribe_name = "AWSLambdaHandler-subscribeUser"
+  
+  function_get_podcast_name = "AWSLambdaHandler-GetPodcast"
 }

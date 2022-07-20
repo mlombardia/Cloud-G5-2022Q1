@@ -1,10 +1,16 @@
 import {DynamoDBClient, GetItemCommand} from "@aws-sdk/client-dynamodb";
 
 const getPodcastByTitleFromDynamoDB = async (title: string) => {
+    const tableName = process.env.PODCASTS_TABLE_NAME;
+
+    if(!tableName) { 
+        throw new Error('PODCASTS_TABLE_NAME is not set');
+    }
+
     const dynamodb = new DynamoDBClient({region: "us-east-1"});
 
     const params = {
-        TableName: "podcasts",
+        TableName: tableName,
         Key: {
             Title: {N: title}
         },
@@ -28,7 +34,17 @@ exports.handler = (request: any) => {
         };
     }
 
-    const podcast = getPodcastByTitleFromDynamoDB(title);
+    let podcast;
+    try {
+        podcast = getPodcastByTitleFromDynamoDB(title);
+    } catch(error) {
+        return {
+            statusCode: 500,
+            body: JSON.stringify({
+                error: `Unexpected error: ${error}`
+            })
+        };
+    }
 
     if (!podcast) {
         return {
