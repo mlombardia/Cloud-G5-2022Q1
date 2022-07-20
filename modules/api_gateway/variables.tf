@@ -12,3 +12,8 @@ variable "description" {
   type = string
   description = "Description for API Gateway"
 }
+
+variable "subs_invoke_arn" {
+  type        = string
+  description = "Subsicription Invoke ARN from Lambda"
+}

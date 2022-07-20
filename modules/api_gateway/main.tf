@@ -33,6 +33,16 @@ resource "aws_api_gateway_integration" "this" {
   uri                     = var.invoke_arn
 }
 
+resource "aws_api_gateway_integration" "subscribe" {
+
+  rest_api_id             = aws_api_gateway_rest_api.this.id
+  resource_id             = aws_api_gateway_resource.this.id
+  http_method             = aws_api_gateway_method.this.http_method
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  uri                     = var.subs_invoke_arn
+}
+
 resource "aws_api_gateway_deployment" "this" {
 
   rest_api_id = aws_api_gateway_rest_api.this.id
