@@ -34,13 +34,28 @@ variable "podcast_table" {
   type        = string
 }
 
+variable "subscriber_table" {
+  description = "subscriber table name"
+  type        = string
+}
+
 variable "lambda_file_name" {
   description = "File name for Lambda"
   type        = string
 }
 
+variable "lambda_subscribe_name" {
+  description = "Suscribe name for Lambda"
+  type        = string
+}
+
 variable "handler" {
   description = "Handler for Lambda"
+  type        = string
+}
+
+variable "subscribe_handler" {
+  description = "Suscribe Handler for Lambda"
   type        = string
 }
 
@@ -56,5 +71,10 @@ variable "role" {
 
 variable "function_name" {
   description = "Bucket name for Lambda"
+  type        = string 
+}
+
+variable "function_subscribe_name" {
+  description = "Subscribe name for Lambda"
   type        = string 
 }

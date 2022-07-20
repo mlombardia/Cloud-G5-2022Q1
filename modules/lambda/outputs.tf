@@ -3,6 +3,11 @@ output "invoke_arn" {
   value       = aws_lambda_function.this.invoke_arn
 }
 
+output "subs_invoke_arn" {
+  description = "Subs Invoke ARN for API GW"
+  value       = aws_lambda_function.subscribe.invoke_arn
+}
+
 output "arn" {
   description = "ARN of Lambda"
   value = aws_lambda_function.this.arn
